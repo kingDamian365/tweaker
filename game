@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fried Chicken Tycoon</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #fff8f0;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    header {
+      background-color: #d62828;
+      color: white;
+      padding: 1em 0;
+      font-size: 2em;
+    }
+    #game {
+      padding: 20px;
+    }
+    .order, .station, .result {
+      border: 2px solid #333;
+      padding: 15px;
+      margin: 15px auto;
+      width: 80%;
+      background-color: #fcd5ce;
+      border-radius: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 1em;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    Fried Chicken Tycoon 🍗
+  </header>
+
+  <div id="game">
+    <div class="order">
+      <h2>Customer Order</h2>
+      <p id="customerOrder">1x Spicy Chicken, 1x Fries</p>
+    </div>
+
+    <div class="station">
+      <h2>Cooking Station</h2>
+      <button onclick="cookChicken('regular')">Fry Regular Chicken</button>
+      <button onclick="cookChicken('spicy')">Fry Spicy Chicken</button>
+      <button onclick="makeFries()">Make Fries</button>
+    </div>
+
+    <div class="result">
+      <h2>Your Tray</h2>
+      <p id="tray">Nothing yet...</p>
+      <button onclick="serveOrder()">Serve to Customer</button>
+    </div>
+
+    <div class="result">
+      <h2>Result</h2>
+      <p id="feedback">Waiting...</p>
+    </div>
+  </div>
+
+  <script>
+    let tray = [];
+
+    function cookChicken(type) {
+      tray.push(type + ' chicken');
+      updateTray();
+    }
+
+    function makeFries() {
+      tray.push('fries');
+      updateTray();
+    }
+
+    function updateTray() {
+      document.getElementById('tray').textContent = tray.join(', ');
+    }
+
+    function serveOrder() {
+      const correctOrder = ['spicy chicken', 'fries'];
+      let score = 0;
+
+      for (let item of correctOrder) {
+        if (tray.includes(item)) {
+          score++;
+        }
+      }
+
+      let feedback = '';
+      if (score === correctOrder.length && tray.length === correctOrder.length) {
+        feedback = 'Perfect! The customer is happy! 😁';
+      } else if (score > 0) {
+        feedback = 'Not bad, but something is missing... 🤔';
+      } else {
+        feedback = 'That's not what they ordered! 😠';
+      }
+
+      document.getElementById('feedback').textContent = feedback;
+      tray = [];
+      updateTray();
+    }
+  </script>
+</body>
+</html>
